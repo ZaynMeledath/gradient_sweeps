@@ -17,15 +17,13 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const MyHomePage(),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  final String title;
+  const MyHomePage({super.key});
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
@@ -39,7 +37,7 @@ class _MyHomePageState extends State<MyHomePage>
   @override
   void initState() {
     animationController = AnimationController(
-        vsync: this, duration: const Duration(milliseconds: 25000));
+        vsync: this, duration: const Duration(milliseconds: 20000));
 
     animation = Tween<double>(
       begin: 0,
@@ -61,7 +59,7 @@ class _MyHomePageState extends State<MyHomePage>
   @override
   Widget build(BuildContext context) {
     final screenSize = MediaQuery.of(context).size;
-    final radius = screenSize.width * 2;
+    final radius = screenSize.width * 1.5;
     return Scaffold(
       body: SafeArea(
         child: Container(
@@ -74,15 +72,14 @@ class _MyHomePageState extends State<MyHomePage>
                   animation: animation,
                   builder: (context, child) {
                     return Positioned(
-                      // left: -radius * 1.8,
-                      // bottom: -radius * 1.7,
+                      left: -radius,
+                      bottom: -radius,
                       child: Transform.rotate(
                         angle: math.pi * animation.value,
-                        // angle: 0,
                         child: CustomPaint(
-                          size: Size(radius * .5, radius * .5),
+                          size: Size(radius * 2, radius * 2),
                           painter: PiePainter(
-                            sweepAngle: math.pi / 50,
+                            sweepAngle: math.pi / 20,
                           ),
                         ),
                       ),
@@ -106,8 +103,8 @@ class PiePainter extends CustomPainter {
   });
 
   final gradientColors = [
-    Colors.purple,
-    Colors.purple.withAlpha(100),
+    Colors.purple.withAlpha(200),
+    Colors.purple.withAlpha(80),
     Colors.purple.withAlpha(1),
   ];
 
@@ -126,7 +123,7 @@ class PiePainter extends CustomPainter {
         center,
         Offset(dx, dy),
         gradientColors,
-        [.4, .7, 1],
+        [.3, .6, 1],
       );
       final paint = Paint()..shader = shader;
       final path = Path()
